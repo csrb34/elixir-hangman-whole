@@ -19,4 +19,10 @@ defmodule Hangman.Impl.Game do
     }
   end
 
+  def init_game do
+    %Hangman.Impl.Game{
+      letters: Dictionary.random_word |> String.codepoints
+    }
+  end
+
 end
