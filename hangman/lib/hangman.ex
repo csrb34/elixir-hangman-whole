@@ -4,15 +4,9 @@ defmodule Hangman do
   """
 
   alias Hangman.Impl.Game #, as: Game # alias without 'as' use the last one in the chain of module names
+  alias Hangman.Type
 
-  @type   state :: :initializing | :won | :lost | :good_guess | :bad_guess | :already_used
   @opaque game :: Game.t
-  @type   tally :: %{
-    turns_left: integer,
-    game_state: state,
-    letters: list(String.t),
-    used: list(String.t)
-  }
 
   @spec new_game() :: game
   defdelegate new_game, to: Game
@@ -23,7 +17,7 @@ defmodule Hangman do
   @spec new_game_2() :: game
   defdelegate new_game_2, to: Game, as: :init_game
 
-  @spec make_move(game, String.t) :: {game, tally}
+  @spec make_move(game, String.t) :: {game, Type.tally}
   def make_move(_game, _guess) do
   end
 end
