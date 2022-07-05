@@ -23,7 +23,6 @@ defmodule Hangman.MixProject do
     [
       {:dictionary, path: "../dictionary"},
       {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
-      # {:inflex, "~> 2.1"}
     ]
   end
 end

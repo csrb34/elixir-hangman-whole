@@ -2,7 +2,6 @@ defmodule Hangman.Impl.Game do
 
   alias Hangman.Type
 
-  # @type t :: %Hangman.Impl.Game{
   @type t :: %__MODULE__{
     turns_left: integer,
     game_state: Type.state,
@@ -15,13 +14,6 @@ defmodule Hangman.Impl.Game do
     letters: [],
     used: MapSet.new()
   )
-
-  # def new_game do
-  #   # %Hangman.Impl.Game{
-  #   %__MODULE__{
-  #     letters: Dictionary.random_word |> String.codepoints
-  #   }
-  # end
 
   @spec new_game() :: t
   def new_game do
@@ -37,7 +29,6 @@ defmodule Hangman.Impl.Game do
 
   @spec init_game() :: t
   def init_game do
-    # %Hangman.Impl.Game{
     %__MODULE__{
       letters: Dictionary.random_word |> String.codepoints
     }
