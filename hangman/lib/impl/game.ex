@@ -35,11 +35,7 @@ defmodule Hangman.Impl.Game do
   end
 
   @spec make_move(t, String.t) :: {t, Type.tally}
-  def make_move(game = %{game_state: :won}, _guess) do
-    {game, tally(game)}
-  end
-
-  def make_move(game = %{game_state: :lost}, _guess) do
+  def make_move(game = %{game_state: state}, _guess) when state in [:won, :lost] do
     {game, tally(game)}
   end
 
