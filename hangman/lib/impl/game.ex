@@ -34,4 +34,22 @@ defmodule Hangman.Impl.Game do
     }
   end
 
+  @spec make_move(t, String.t) :: {t, Type.tally}
+  def make_move(game = %{game_state: :won}, _guess) do
+    {game, tally(game)}
+  end
+
+  def make_move(game = %{game_state: :lost}, _guess) do
+    {game, tally(game)}
+  end
+
+  defp tally(game) do
+    %{
+      turns_left: game.turns_left,
+      game_state: game.game_state,
+      letters: [],
+      used: game.used |> MapSet.to_list |> Enum.sort
+    }
+  end
+
 end
