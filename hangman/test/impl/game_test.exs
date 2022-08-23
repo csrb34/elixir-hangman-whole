@@ -29,11 +29,35 @@ defmodule Hangman.Impl.GameTest do
     assert game.letters |> Enum.join("") =~ ~r/^[a-z]+/u
   end
 
-  test "fails because word letters are not all lowercase a-z character" do
-    word = "ReGalO"
+  test "normalize and lowercase word characters" do
+    word = "ReGálÓ"
 
     game = Game.new_game(word)
-    refute game.letters |> Enum.join("") =~ ~r/^[a-z]+/u
+    assert game.letters |> Enum.join("") =~ ~r/^[a-z]+/u
+  end
+
+  test "make a move with a capital letter fails" do
+    game = Game.new_game("wombat")
+    {_game, tally} = Game.make_move(game, "R")
+    assert tally.game_state == :invalid_char
+  end
+
+  test "make a move with a capital letter fails even when is in the word" do
+    game = Game.new_game("Wombat")
+    {_game, tally} = Game.make_move(game, "W")
+    assert tally.game_state == :invalid_char
+  end
+
+  test "make a move with a written accent letter fails" do
+    game = Game.new_game("wombat")
+    {_game, tally} = Game.make_move(game, "á")
+    assert tally.game_state == :invalid_char
+  end
+
+  test "make a move with a number fails" do
+    game = Game.new_game("wombat")
+    {_game, tally} = Game.make_move(game, "3")
+    assert tally.game_state == :invalid_char
   end
 
   test "state doesn't change if a game is won or lost" do

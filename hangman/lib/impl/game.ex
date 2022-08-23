@@ -23,7 +23,7 @@ defmodule Hangman.Impl.Game do
   @spec new_game(String.t) :: t
   def new_game(word) do
     %__MODULE__{
-      letters: word |> String.codepoints
+      letters: word |> String.normalize(:nfd) |> String.replace(~r/[^A-z\s]/u, "") |> String.downcase |> String.codepoints
     }
   end
 
@@ -41,8 +41,16 @@ defmodule Hangman.Impl.Game do
   end
 
   def make_move(game, guess) do
-    accept_guess(game, guess, MapSet.member?(game.used, guess))
+    guess_is_valid(game, guess, guess =~ ~r/^[a-z]+/u)
     |> return_with_tally()
+  end
+
+  defp guess_is_valid(game, _guess, _valid_guess = false) do
+    %{game | game_state: :invalid_char}
+  end
+
+  defp guess_is_valid(game, guess, _valid_guess = true) do
+    accept_guess(game, guess, MapSet.member?(game.used, guess))
   end
 
   defp accept_guess(game, _guess, _already_used = true) do
