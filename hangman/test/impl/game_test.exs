@@ -22,13 +22,6 @@ defmodule Hangman.Impl.GameTest do
     assert game.letters == word |> String.codepoints
   end
 
-  test "new game word letters are all lowercase a-z character" do
-    word = "regalo"
-
-    game = Game.new_game(word)
-    assert game.letters |> Enum.join("") =~ ~r/^[a-z]+/u
-  end
-
   test "normalize and lowercase word characters" do
     word = "ReGálÓ"
 
