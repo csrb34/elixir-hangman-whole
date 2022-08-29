@@ -8,8 +8,6 @@ defmodule TextClient.Impl.Player do
   def start() do
     game = Hangman.new_game()
     tally = Hangman.tally(game)
-    IO.puts game.letters |> to_string()
-    IO.puts tally.letters |> to_string()
     interact({ game, tally })
   end
 
@@ -24,19 +22,11 @@ defmodule TextClient.Impl.Player do
   end
 
   def interact({game, tally}) do
-    # feedback
-    # display current word
-    # get next guess
-    # make move
     IO.puts feedback_for(tally)
     IO.puts current_word(tally)
-    guess = get_guess()
-    IO.puts guess
-    {update_game, update_tally} = Hangman.make_move(game, guess)
-    interact({ update_game, update_tally })
+    Hangman.make_move(game, get_guess())
+    |> interact()
   end
-
-  # @type   state :: :initializing | :good_guess | :bad_guess | :already_used | :invalid_char
 
   def feedback_for(tally = %{ game_state: :initializing }) do
     "Welcome! I'm thinking of a #{tally.letters |> length} letter word"
