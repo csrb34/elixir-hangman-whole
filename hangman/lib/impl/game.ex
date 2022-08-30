@@ -41,7 +41,7 @@ defmodule Hangman.Impl.Game do
   end
 
   def make_move(game, guess) do
-    guess_is_valid(game, guess, guess =~ ~r/^[a-z]+/u)
+    guess_is_valid(game, guess, guess =~ ~r/^[a-z]{1}$/u)
     |> return_with_tally()
   end
 
