@@ -39,9 +39,9 @@ defmodule TextClient.Impl.Player do
 
   def current_word(tally) do
     [
-        "Word so far: ", tally.letters |> Enum.join(" "),
-      "   turns left: ", tally.turns_left |> to_string,
-      "   used so far: ", tally.used |> Enum.join(",")
+      "Word so far: ", tally.letters |> Enum.join(" "),
+      IO.ANSI.format([:green, "   turns left: "]), IO.ANSI.format([:cyan, tally.turns_left |> to_string()]),
+      IO.ANSI.format([:green, "   used so far: "]), IO.ANSI.format([:yellow, tally.used |> Enum.join(",")])
     ]
   end
 
