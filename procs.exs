@@ -1,6 +1,9 @@
 defmodule Procs do
-  def hello(name) do
-    Process.sleep(1000)
-    IO.puts("Hello #{name}")
+  def hello() do
+    receive do
+    msg ->
+      IO.puts("Hello #{inspect(msg)}")
+    end
+    hello() # for recursion
   end
 end
