@@ -14,4 +14,28 @@ defmodule Procs do
     end
     hello(what_to_say) # for recursion
   end
+
+  def count_hello(count) do
+    receive do
+    msg ->
+      IO.puts "#{count}: Hello #{msg}"
+    end
+    count_hello(count + 1) # for recursion
+  end
+
+  def count_hello_pm(count) do
+    receive do
+    {:quit} ->
+      IO.puts "I'm outta here" # finish the process
+    {:add, n} ->
+      count_hello_pm(count + n)
+    {:reset} ->
+      count_hello_pm(0)
+    :reset2 ->
+      count_hello_pm(0)
+    msg ->
+      IO.puts "#{count}: Hello #{msg}"
+      count_hello_pm(count)
+    end
+  end
 end
