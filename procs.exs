@@ -38,4 +38,21 @@ defmodule Procs do
       count_hello_pm(count)
     end
   end
+
+  def hello2(count) do
+    receive do
+    {:crash, reason} ->
+      exit(reason)
+    {:quit} ->
+      IO.puts "I'm outta here"
+    {:add, n} ->
+      hello2(count + n)
+    {:reset} ->
+      hello2(0)
+    msg ->
+      IO.puts "#{count}: Hello #{msg}"
+      hello2(count)
+    end
+  end
+
 end
